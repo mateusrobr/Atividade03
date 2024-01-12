@@ -1,6 +1,7 @@
 import pathlib
 import os
 import sqlite3
+from datetime import datetime
 
 def verificacao_arquivo_bd():
     nome_arquivo = os.getcwd() + "\\medico.bd"
@@ -60,7 +61,7 @@ if __name__ == '__main__':
     cursor = banco.cursor()
     criar_tabela(cursor)
     
-    '''    # Inserir médicos
+    ''' # Inserir médicos
     for i in range(1, 6):
         dados_medico = (i, f"Médico_{i}", f"Endereço_{i}", f"12345678{i}", f"CRM{i}")
         inserir(cursor, "medico", dados_medico)
@@ -70,9 +71,11 @@ if __name__ == '__main__':
         dados_paciente = (i, f"Paciente_{i}", f"Endereço_{i}", f"98765432{i}", f"CPF{i}23456789")
         inserir(cursor, "paciente", dados_paciente)
 
-    # Inserir consultas
+    # Inserir consultas com datas
     for i in range(1, 6):
-        dados_consulta = (i, None, i, i, i, 100.0 * i, True if i % 2 == 0 else False)
+        # Utilizando datetime para criar datas fictícias
+        data_consulta = datetime(2023, 1, i, 10, 30)  # Ano, Mês, Dia, Hora, Minuto
+        dados_consulta = (i, data_consulta, i, i, i, 100.0 * i, True if i % 2 == 0 else False)
         inserir(cursor, "consulta", dados_consulta)
 
     # Inserir secretárias
