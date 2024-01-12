@@ -27,17 +27,23 @@ def criar_tabela(cursor):
 
 
 def mostrar_tabela(cursor, nome_tabela):
-    print(f"Conteúdo da Tabela {nome_tabela}:")
+    cursor.execute(f"PRAGMA table_info({nome_tabela})")
+    colunas = [coluna[1] for coluna in cursor.fetchall()]
+
+    print(f"\nConteúdo da Tabela {nome_tabela}:")
+
+    if not colunas:
+        print("A tabela está vazia.")
+        return
+
+    print(" | ".join(colunas))
+    print("-" * (4 * len(colunas) - 1))
+
     cursor.execute(f"SELECT * FROM {nome_tabela}")
     resultados = cursor.fetchall()
 
-    if resultados:
-        # Se houver resultados, imprima as linhas
-        for linha in resultados:
-            print(linha)
-        print('\n')
-    else:
-        print("A tabela está vazia.")
+    for linha in resultados:
+        print(" | ".join(map(str, linha)))
 
 
 def inserir(cursor, nome_tabela, dados):
