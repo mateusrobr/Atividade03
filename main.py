@@ -28,6 +28,18 @@ def criar_tabela(cursor):
     cursor.execute(comando)
 
 
+def mostrar_tabela(cursor, nome_tabela):
+    print(f"Conteúdo da Tabela {nome_tabela}:")
+    cursor.execute(f"SELECT * FROM {nome_tabela}")
+    resultados = cursor.fetchall()
+
+    if resultados:
+        # Se houver resultados, imprima as linhas
+        for linha in resultados:
+            print(linha)
+    else:
+        print("A tabela está vazia.")
+
 
 if __name__ == '__main__':
     verificacao_arquivo_bd()
@@ -37,13 +49,16 @@ if __name__ == '__main__':
     criar_tabela(cursor)
     #PRA INSERIR USA ESSE DIGITA ESSE COMANDO AQUI EMBAIXO E DPS COLOCA ELE ALI NO EXECUTE 
     comando = "INSERT INTO paciente VALUES (?,?,?,?,?)"
-    cursor.execute(comando,(1,"Christian","Augusto Montenegro","9198245421","014454544545"))
+    #cursor.execute(comando,(1,"Christian","Augusto Montenegro","9198245421","014454544545"))
     #PRA FAZER MUDANÇAS NO BANCO TEM QUE USAR O COMIIT
-    banco.commit()
+    #banco.commit()
 
+    mostrar_tabela(cursor, "paciente")
+    mostrar_tabela(cursor, "medico")
+    mostrar_tabela(cursor, "consulta")
+    mostrar_tabela(cursor, "secretaria")
     
-    
-    print("Tabela Paciente")
+    '''print("Tabela Paciente")
     cursor.execute("SELECT * FROM paciente")
     print(cursor.fetchall())
     print("-------------------------")
@@ -58,7 +73,7 @@ if __name__ == '__main__':
     print("Tabela Secretaria")
     cursor.execute("SELECT * FROM secretaria")
     print(cursor.fetchall())
-    print("-------------------------")
+    print("-------------------------")'''
     cursor.close()
     banco.close()
 
