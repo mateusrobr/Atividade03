@@ -41,6 +41,13 @@ def mostrar_tabela(cursor, nome_tabela):
         print("A tabela está vazia.")
 
 
+def inserir(cursor, nome_tabela, dados):
+    placeholders = ', '.join(['?' for _ in range(len(dados))])
+    comando = f"INSERT INTO {nome_tabela} VALUES ({placeholders})"
+    
+    cursor.execute(comando, dados)
+    cursor.connection.commit()
+
 if __name__ == '__main__':
     verificacao_arquivo_bd()
 
@@ -52,6 +59,9 @@ if __name__ == '__main__':
     #cursor.execute(comando,(1,"Christian","Augusto Montenegro","9198245421","014454544545"))
     #PRA FAZER MUDANÇAS NO BANCO TEM QUE USAR O COMIIT
     #banco.commit()
+    
+    dados_paciente = (2, "Maria", "Rua ABC", "987654321", "12345678901")
+    inserir(cursor, "paciente", dados_paciente)
 
     mostrar_tabela(cursor, "paciente")
     mostrar_tabela(cursor, "medico")
